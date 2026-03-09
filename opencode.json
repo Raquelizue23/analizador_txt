@@ -1,0 +1,306 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "permission": {
+        "skill": {
+            "*": "ask"
+        }
+    },
+    "mcp": {
+        "playwright": {
+            "type": "local",
+            "command": [
+                "npx",
+                "@playwright/mcp@latest"
+            ],
+            "enabled": false
+        }
+    },
+    "provider": {
+        "azure": {
+            "options": {
+                "resourceName": "myworkapp2"
+            },
+            "models": {
+                "gpt-5-mini": {
+                    "name": "gpt-5-mini"
+                }
+            }
+        },
+        "frida-llm": {
+            "name": "Frida LLM",
+            "npm": "@ai-sdk/openai-compatible",
+            "api": "https://frida-llm-api.azurewebsites.net/v1",
+            "env": [
+                "FRIDA_LLM_API_KEY"
+            ],
+            "options": {
+                "baseURL": "https://frida-llm-api.azurewebsites.net/v1",
+                "apiKey": "VGMuGj2unFwtgfk8u1SQ"
+            },
+            "models": {
+                "gpt-5": {
+                    "name": "GPT-5",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5-chat": {
+                    "name": "GPT-5 Chat",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5-mini": {
+                    "name": "GPT-5 Mini",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "gpt-5-nano": {
+                    "name": "GPT-5 Nano",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 128000,
+                        "output": 32000
+                    }
+                },
+                "gpt-5-codex": {
+                    "name": "GPT-5 Codex",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5.1-chat": {
+                    "name": "GPT-5.1 Chat",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5.2-chat": {
+                    "name": "GPT-5.2 Chat",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5.1-codex": {
+                    "name": "GPT-5.1 Codex",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-5.1-codex-max": {
+                    "name": "GPT-5.1 Codex Max",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 400000,
+                        "output": 128000
+                    }
+                },
+                "gpt-4.1": {
+                    "name": "GPT-4.1",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 128000,
+                        "output": 32768
+                    }
+                },
+                "gpt-4.1-mini": {
+                    "name": "GPT-4.1 Mini",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 64000,
+                        "output": 16384
+                    }
+                },
+                "gpt-4.1-nano": {
+                    "name": "GPT-4.1 Nano",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 32000,
+                        "output": 8192
+                    }
+                },
+                "gpt-oss-120b": {
+                    "name": "GPT OSS 120B",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 128000,
+                        "output": 32000
+                    }
+                },
+                "Innovation-gpt4o": {
+                    "name": "Innovation GPT-4o",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 128000,
+                        "output": 16384
+                    }
+                },
+                "Innovation-gpt4o-mini": {
+                    "name": "Innovation GPT-4o Mini",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 128000,
+                        "output": 16384
+                    }
+                },
+                "o1": {
+                    "name": "O1 (Razonamiento)",
+                    "tool_call": true,
+                    "attachment": false,
+                    "limit": {
+                        "context": 200000,
+                        "output": 100000
+                    }
+                },
+                "o1-mini": {
+                    "name": "O1 Mini",
+                    "tool_call": true,
+                    "attachment": false,
+                    "limit": {
+                        "context": 128000,
+                        "output": 65536
+                    }
+                },
+                "o1-preview": {
+                    "name": "O1 Preview",
+                    "tool_call": true,
+                    "attachment": false,
+                    "limit": {
+                        "context": 128000,
+                        "output": 32768
+                    }
+                },
+                "o3-mini": {
+                    "name": "O3 Mini",
+                    "tool_call": true,
+                    "attachment": false,
+                    "limit": {
+                        "context": 200000,
+                        "output": 100000
+                    }
+                },
+                "o4-mini": {
+                    "name": "O4 Mini",
+                    "tool_call": true,
+                    "attachment": false,
+                    "limit": {
+                        "context": 200000,
+                        "output": 100000
+                    }
+                },
+                "claude-3-5-sonnet": {
+                    "name": "Claude 3.5 Sonnet",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 8192
+                    }
+                },
+                "claude-3-5-haiku": {
+                    "name": "Claude 3.5 Haiku",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 8192
+                    }
+                },
+                "claude-3-7-sonnet": {
+                    "name": "Claude 3.7 Sonnet",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "claude-4-sonnet": {
+                    "name": "Claude 4 Sonnet",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "claude-sonnet-4-5": {
+                    "name": "Claude Sonnet 4.5",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "claude-haiku-4-5": {
+                    "name": "Claude Haiku 4.5",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "claude-opus-4-5": {
+                    "name": "Claude Opus 4.5",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "claude-opus-4-5-2": {
+                    "name": "Claude Opus 4.5 v2",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                },
+                "model-router": {
+                    "name": "Model Router (Auto)",
+                    "tool_call": true,
+                    "attachment": true,
+                    "limit": {
+                        "context": 200000,
+                        "output": 64000
+                    }
+                }
+            }
+        }
+    },
+    "model": "azure/gpt-5-mini",
+}

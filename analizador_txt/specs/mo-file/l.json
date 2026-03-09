@@ -1,0 +1,36 @@
+{
+  "name": "mo-file-movimientos-l",
+  "record_length": 852,
+  "description": "Especificación para movimientos tipo L. Reusa la spec base; sólo se declaran aquí las diferencias respecto a la base.",
+  "base_spec": "./base.json",
+  "shared_rules": "./shared_rules.json",
+  "fields_source": "base",
+  "# NOTE": "Sólo se listan overrides: si un field no aparece aquí se toma tal cual desde base.json",
+
+  "field_overrides": [
+    {"id": 3, "name": "clave_instrumento_bmv", "label": "CLAVE DE INSTRUMENTO BMV", "start": 22, "end": 25, "length": 4, "type": "alphanumeric", "required": true, "message": "Clave BMV o Tipo de Valor."},
+    {"id": 4, "name": "emisora", "label": "EMISORA", "start": 26, "end": 32, "length": 7, "type": "alphanumeric", "required": true, "message": "Clave de la Emisora."},
+    {"id": 5, "name": "serie", "label": "SERIE", "start": 33, "end": 39, "length": 7, "type": "alphanumeric", "required": true, "message": "Serie de la Emisora."},
+    {"id": 8, "name": "fecha_liquidacion", "label": "FECHA DE LIQUIDACION", "start": 51, "end": 58, "length": 8, "type": "date", "required": true, "message": "Fecha de Liquidación AAAAMMDD. Debe ser igual a la fecha de operación."},
+    {"id": 9, "name": "clave_de_movimiento", "label": "CLAVE DE MOVIMIENTO", "start": 59, "end": 60, "length": 2, "type": "alphanumeric", "required": true, "message": "\"L0\" para Traspaso de Salida. \"L1\" para traspaso de entrada."},
+    {"id": 10, "name": "clave_del_proveedor", "label": "CLAVE DEL PROVEEDOR", "start": 61, "end": 67, "length": 7, "type": "alphanumeric", "required": true, "message": "\"INDEVAL\""},
+    {"id": 12, "name": "plazo_reporo_prestamo", "label": "PLAZO DEL REPORTO / PRESTAMO", "start": 73, "end": 77, "length": 5, "type": "numeric", "required": true, "message": "\"0\". Cero."},
+    {"id": 13, "name": "titulos", "label": "TITULOS", "start": 78, "end": 89, "length": 12, "type": "numeric", "required": true, "message": "Número de títulos."},
+    {"id": 16, "name": "precio_unitario_costo", "label": "COSTO UNITARIO", "start": 114, "end": 135, "length": 22, "type": "numeric", "required": true, "message": "(2) Para claves de mov \"L0\" \"L1\": Costo Unitario de la posición en Moneda Original"},
+    {"id": 38, "name": "precio_limpio_precio_mercado", "label": "PRECIO MERCADO", "start": 482, "end": 503, "length": 22, "type": "numeric", "required": true, "message": "(2) Para claves de mov \"L0\" \"L1\" Precio Mercado - Ambos en pesos. Precio del vector del día del traspaso."},
+    {"id": 39, "name": "factor_interes_mismo_dia", "label": "FACTOR INTERES MISMO DIA", "start": 504, "end": 515, "length": 12, "type": "numeric", "required": false, "message": "En pesos (NECESARIO EN REPORTOS / PRÉSTAMOS)"},
+    {"id": 40, "name": "clave_emisor", "label": "CLAVE EMISOR", "start": 516, "end": 522, "length": 7, "type": "alphanumeric", "required": false, "message": "NO APLICA", "expected": "       "},
+    {"id": 41, "name": "nombre_emisor", "label": "NOMBRE EMISOR", "start": 523, "end": 562, "length": 40, "type": "alphanumeric", "required": false, "message": "NO APLICA", "expected": "                                        "},
+    {"id": 42, "name": "sponsor", "label": "SPONSOR (VEHICULOS)", "start": 563, "end": 564, "length": 2, "type": "numeric", "required": false, "message": "NO APLICA", "expected": "  "},
+    {"id": 46, "name": "tipo_de_liquidacion", "label": "TIPO DE LIQUIDACION", "start": 592, "end": 592, "length": 1, "type": "alphanumeric", "required": true, "message": "0=MD"},
+    {"id": 47, "name": "folio_operacion_divisas", "label": "FOLIO OPERACION (DIVISAS)", "start": 593, "end": 600, "length": 8, "type": "alphanumeric", "required": false, "message": "NO APLICA", "expected": "        "},
+    {"id": 48, "name": "indice_que_replica", "label": "INDICE QUE REPLICA", "start": 601, "end": 603, "length": 3, "type": "numeric", "required": false, "message": "NO APLICA", "expected": "   "},
+    {"id": 53, "name": "folio_posicion_prestamos", "label": "FOLIO POSICIÓN (PRESTAMOS)", "start": 643, "end": 652, "length": 10, "type": "numeric", "required": false, "message": "Folio único con que es identificado el préstamo en la posición. Sólo para préstamos. Sirve para relacionarlo con las garantías."},
+    {"id": 68, "name": "tipo_de_contabilidad", "label": "TIPO DE CONTABILIDAD (INSTRUMENTO)", "start": 837, "end": 839, "length": 3, "type": "alphanumeric", "required": false, "message": "NO APLICA", "expected": "   "}
+  ],
+
+  "movement_schemas": {
+    "L0": { "description": "Traspaso de salida (L0)", "inherits": "./shared_rules.json" },
+    "L1": { "description": "Traspaso de entrada (L1)", "inherits": "./shared_rules.json" }
+  }
+}

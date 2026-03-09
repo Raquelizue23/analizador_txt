@@ -1,0 +1,50 @@
+{
+  "name": "mo-file-shared-rules",
+  "description": "Reglas genéricas compartidas entre movimientos M0/M1/L0/L1. Cada regla incluye información para que el validador las ejecute (tipo, campos afectados y mensaje de error).",
+  "rules": [
+    {
+      "id": 1,
+      "type": "movement_detection",
+      "field": "clave_de_movimiento",
+      "start": 59,
+      "end": 60,
+      "description": "Clave de movimiento: 'M0' para expresar la divisa que se compra; 'M1' para la divisa que se vende; 'L0' salida; 'L1' entrada.",
+      "allowed": ["M0", "M1", "L0", "L1"],
+      "message": "La clave de movimiento debe ser una de: 'M0','M1','L0','L1' y ubicarse en las posiciones 59-60"
+    },
+    {
+      "id": 2,
+      "type": "file",
+      "description": "Longitud del registro",
+      "check": "record.length == 852",
+      "message": "El registro debe medir exactamente 852 caracteres"
+    },
+    {
+      "id": 3,
+      "type": "info",
+      "description": "Regla de validación general: campos marcados como 'NO' en uso pueden aparecer pero se ignoran en validaciones críticas",
+      "message": "Campos no aplicables se validan sólo para formato/longitud si están presentes"
+    },
+    {
+      "id": 4,
+      "type": "formatting",
+      "description": "Campos alfanuméricos justificados a la izquierda",
+      "check": "left-justified; rellenar con espacios a la derecha hasta la longitud del campo",
+      "message": "Los campos alfanuméricos deben ir justificados a la izquierda y rellenarse con espacios a la derecha si no ocupan toda la longitud"
+    },
+    {
+      "id": 5,
+      "type": "formatting",
+      "description": "Campos numéricos justificados a la derecha sin punto decimal",
+      "check": "right-justified; sin punto decimal; decimales implícitos según 'scale' en la spec; rellenar con espacios a la izquierda si no ocupan toda la longitud",
+      "message": "Los campos numéricos deben ir justificados a la derecha, sin punto decimal (decimales implícitos) y rellenarse con espacios a la izquierda si no ocupan toda la longitud"
+    },
+    {
+      "id": 6,
+      "type": "padding",
+      "description": "Regla general de llenado con espacios",
+      "check": "Si el valor real ocupa menos que la longitud del campo, deben usarse espacios (blank padding) para completar la longitud del campo; no usar ceros a la izquierda en alfanuméricos ni ceros a la derecha en numéricos para rellenar",
+      "message": "Cuando los datos no ocupen la longitud total del campo, debe rellenarse con espacios (a la derecha para alfanuméricos, a la izquierda para numéricos). No usar caracteres de relleno distintos a espacios."
+    }
+  ]
+}
