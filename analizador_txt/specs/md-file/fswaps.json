@@ -1,0 +1,17 @@
+{
+  "name": "md-file-flujos-swaps",
+  "record_length": 826,
+  "description": "Especificación para movimientos tipo flujos Swaps. Reusa el spec base; sólo se declaran aquí las diferencias respecto a base.json.",
+  "base_spec": "./base.json",
+  "shared_rules": "./shared_rules.json",
+  "fields_source": "base",
+  "# NOTE": "Sólo se listan overrides: si un field no aparece aquí se toma tal cual desde base.json",
+  "# NOTE_1": "La 64 y 65 solo estan aqui porque difieren los numeros de start y end con respecto al formato original y puede ser un error en el archivo",
+  "fields": [
+    {"id": 8, "name": "clave_de_movimiento", "label": "CLAVE DE MOVIMIENTO", "start": 42, "end": 42, "length": 1, "type": "alphanumeric", "required": true, "message": "P=Pago o flujo de cupón"},
+    {"id": 9, "name": "tipo_de_movimiento", "label": "TIPO DE MOVIMIENTO", "start": 43, "end": 43, "length": 1, "type": "alphanumeric", "required": true, "message": "E/R  Pata a Entregar o Recibir en Pagos de cupón "},
+    {"id": 15, "name": "fecha_de_apertura_original", "label": "FECHA DE APERTURA ORIGINAL", "start": 109, "end": 116, "length": 8, "type": "date", "format": "YYYYMMDD", "required": false, "message": "Se usa en compensaciones. Fecha de operación original de derivado que se compensa."},
+    {"id": 64, "name": "bloomberg_ticker", "label": "BLOOMBERG TICKER", "start": 728, "end": 736, "length": 9, "type": "alphanumeric", "required": true, "message": "Clave del Bloomberg Ticker."},
+    {"id": 65, "name": "id_posicion", "label": "ID POSICION", "start": 798, "end": 817, "length": 20, "type": "alphanumeric", "required": true, "message": "Identificador único de posición."}
+  ]
+}
