@@ -6,11 +6,11 @@
       "id": 1,
       "type": "movement_detection",
       "field": "clave_de_movimiento",
-      "start": "",
-      "end": "",
-      "description": "",
-      "allowed": "",
-      "message": ""
+      "start": "42",
+      "end": "42",
+      "description": "I, para inicios, S para Swaps, C para compensaciones",
+      "allowed": ["I", "S", "C"],
+      "message": "La clave de movimiento debe ser una de: 'I','S','C' y ubicarse en la posicion 42"
     },
     {
       "id": 2,

@@ -119,7 +119,88 @@ def run_ui():
         json_str = json.dumps(results, ensure_ascii=False, indent=2)
         st.download_button("Descargar JSON", data=json_str, file_name="results.json", mime="application/json")
 
+    elif file_type == "MD":
+        # Para MD usamos specs/md-file
+        spec_path = "analizador_txt/specs/md-file/inicios.json"
+        base_spec_path = "analizador_txt/specs/md-file/base.json"
+        # Detectar movimiento usando la primera línea (I, C, S)
+        detected = pick_movement_schema(spec_path, content[0])
+
+        if detected is None:
+            st.info("No se detectó tipo de movimiento (I/C/S) en la primera línea; usando 'base.json' para validar todas las líneas.")
+            movement_spec_file = base_spec_path
+        else:
+            # según tipo elegir archivo específico
+            if detected == "I":
+                movement_spec_file = "analizador_txt/specs/md-file/inicios.json"
+            elif detected == "C":
+                movement_spec_file = "analizador_txt/specs/md-file/compensaciones.json"
+            elif detected == "S":
+                movement_spec_file = "analizador_txt/specs/md-file/fswaps.json"
+            else:
+                st.info(f"Tipo de movimiento detectado '{detected}' no es I/C/S; usando 'base.json' para validación.")
+                movement_spec_file = base_spec_path
+
+        # cargar spec final
+        spec = load_spec(movement_spec_file)
+
+        # procesar cada línea: parsear y validar
+        results = []
+        for i, line in enumerate(content, start=1):
+            parsed = parse_line(line, {"fields": spec["fields"]})
+            detected_line = pick_movement_schema(movement_spec_file, line)
+            res = validate_record(parsed, spec.get("rules", []), raw_line=line, fields=spec.get("fields"))
+            errs = res.get("errors", [])
+            passes = res.get("passes", [])
+            results.append({"row": i, "movement": detected_line, "ok": len(errs) == 0, "errors": errs, "passes": passes})
+
+        st.write("### Resumen por línea")
+        field_map = {f.get("name"): f for f in spec.get("fields", [])}
+
+        for r in results:
+            if r["ok"]:
+                st.success(f"Linea {r['row']} (mov: {r.get('movement')}): OK")
+            else:
+                st.error(f"Linea {r['row']} (mov: {r.get('movement')}): {len(r['errors'])} errores")
+                for e in r["errors"]:
+                    rid = e.get("rule_id")
+                    ef = e.get("field")
+                    message = e.get("message")
+                    value = e.get("value")
+                    expected = e.get("expected")
+
+                    start_end = None
+                    if ef:
+                        fmeta = field_map.get(ef)
+                        if not fmeta:
+                            if isinstance(rid, str) and rid.startswith("field."):
+                                parts = rid.split(".")
+                                if len(parts) >= 2:
+                                    candidate = parts[1]
+                                    fmeta = field_map.get(candidate)
+                        if fmeta:
+                            start_end = (fmeta.get("start"), fmeta.get("end"))
+
+                    display_id = rid
+                    if isinstance(rid, str) and rid.startswith("field.") and ef:
+                        fmeta = field_map.get(ef)
+                        if not fmeta:
+                            parts = rid.split(".")
+                            if len(parts) >= 2:
+                                candidate = parts[1]
+                                fmeta = field_map.get(candidate)
+                        if fmeta and fmeta.get("id") is not None:
+                            display_id = fmeta.get("id")
+
+                    if start_end:
+                        st.write(f" - Regla {display_id} (mov: {r.get('movement')}) (pos {start_end[0]}-{start_end[1]}): {message} => valor: {value} esperado: {expected}")
+                    else:
+                        st.write(f" - Regla {display_id} (mov: {r.get('movement')}): {message} => valor: {value} esperado: {expected}")
+
+        json_str = json.dumps(results, ensure_ascii=False, indent=2)
+        st.download_button("Descargar JSON", data=json_str, file_name="results_md.json", mime="application/json")
+
     else:
-        st.warning("Soporte actual sólo para MO (implementación mínima).")
+        st.warning("Soporte actual sólo para MO y MD (implementación mínima).")
 
 run_ui()

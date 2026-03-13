@@ -68,8 +68,9 @@ def load_spec(path: str) -> Dict:
     for f in base.get("fields", []):
         fields_by_id[f.get("id")] = dict(f)
 
-    # aplicar overrides
-    for o in spec.get("field_overrides", []):
+    # aplicar overrides: algunas specs usan 'field_overrides', otras usan 'fields' para declarar
+    # los cambios respecto a la base. Unir ambos para mayor compatibilidad.
+    for o in list(spec.get("field_overrides", [])) + list(spec.get("fields", [])):
         fields_by_id[o.get("id")] = {**fields_by_id.get(o.get("id"), {}), **o}
 
     # ordenar por start
@@ -101,22 +102,41 @@ def pick_movement_schema(movement_spec_path: str, raw_line: str) -> Optional[str
         shared = read_json(resolve_path(movement_spec_path, shared_rules))
         for r in shared.get("rules", []):
             if r.get("type") == "movement_detection":
-                start = r.get("start", 1) - 1
-                end = r.get("end")
-                if end is None:
-                    val = raw_line[start:]
+                # start/end pueden venir como str en algunas specs; intentar convertir a int
+                try:
+                    start_idx = int(r.get("start", 1)) - 1
+                except Exception:
+                    start_idx = 0
+                end_raw = r.get("end")
+                try:
+                    end_idx = int(end_raw) if end_raw is not None and end_raw != "" else None
+                except Exception:
+                    end_idx = None
+
+                if end_idx is None:
+                    val = raw_line[start_idx:]
                 else:
-                    val = raw_line[start:end]
+                    # convertir end_idx a slice end (Python slice end is exclusive)
+                    val = raw_line[start_idx:end_idx]
                 val = val.strip()
                 allowed = r.get("allowed", [])
                 if val in allowed:
                     return val
     # fallback: mirar field overrides para clave_de_movimiento
-    for f in spec.get("field_overrides", []):
-        if f.get("name") in ("clave_de_movimiento", "clave_de_movimiento"):
-            start = f.get("start", 1) - 1
-            end = f.get("end")
-            val = raw_line[start:end] if end else raw_line[start:]
+    # fallback: mirar field_overrides o fields para clave_de_movimiento
+    for f in list(spec.get("field_overrides", [])) + list(spec.get("fields", [])):
+        if f.get("name") == "clave_de_movimiento":
+            try:
+                start_idx = int(f.get("start", 1)) - 1
+            except Exception:
+                start_idx = 0
+            end_raw = f.get("end")
+            try:
+                end_idx = int(end_raw) if end_raw is not None and end_raw != "" else None
+            except Exception:
+                end_idx = None
+
+            val = raw_line[start_idx:end_idx] if end_idx else raw_line[start_idx:]
             val = val.strip()
             # si entra en movement_schemas
             if val and val in spec.get("movement_schemas", {}):

@@ -6,17 +6,15 @@
   "shared_rules": "./shared_rules.json",
   "fields_source": "base",
   "# NOTE": "Sólo se listan overrides: si un field no aparece aquí se toma tal cual desde base.json",
-  "# NOTE_1": "La 64 y 65 solo estan aqui porque difieren los numeros de start y end con respecto al formato original y puede ser un error en el archivo",
+  "# NOTE_2_Regla 8 original": "'message': 'C=Compras (Larga)  V=Ventas (Corto)'",
   "fields": [
-    {"id": 8, "name": "clave_de_movimiento", "label": "CLAVE DE MOVIMIENTO", "start": 42, "end": 42, "length": 1, "type": "alphanumeric", "required": true, "message": "C=Compras (Larga)  V=Ventas (Corto)"},
+    {"id": 8, "name": "clave_de_movimiento", "label": "CLAVE DE MOVIMIENTO", "start": 42, "end": 42, "length": 1, "type": "alphanumeric", "required": true, "message": "I para inicios"},
     {"id": 9, "name": "tipo_de_movimiento", "label": "TIPO DE MOVIMIENTO", "start": 43, "end": 43, "length": 1, "type": "alphanumeric", "required": true, "message": "A=Apertura"},
-    {"id": 13, "name": "precio_o_tasa_pactada", "label": "PRECIO O TASA PACTADA", "start": 81, "end": 94, "length": 14, "type": "numeric", "required": false, "message": "Precio o Tasa Pactados en el movimiento. Tasa Nuevo cupón en Pagos de cupón"},
-    {"id": 14, "name": "precio_o_tasa_original", "label": "PRECIO O TASA ORIGINAL", "start": 95, "end": 108, "length": 14, "type": "numeric", "required": false, "message": "Precio o Tasa Pactados originales (sólo en compensaciones). Tasa del cupón que se paga"},
-    {"id": 15, "name": "fecha_de_apertura_original", "label": "FECHA DE APERTURA ORIGINAL", "start": 109, "end": 116, "length": 8, "type": "date", "format": "YYYYMMDD", "required": false, "message": "Se usa en compensaciones. Fecha de operación original del derivado que se compensa."},
-    {"id": 30, "name": "util_perd_valor_presente_monto_cupon", "label": "UTIL/PÉRD. VALOR PRESENTE / MONTO CUPON", "start": 419, "end": 436, "length": 18, "type": "numeric", "required": false, "message": "Monto de Utilidad/Pérdida Valor Presente. Monto pago/cobro de cupón en SWAPS. (Monto con I.S.R.). (Numérico 16,2)."},
-    {"id": 31, "name": "importe_de_la_prima", "label": "IMPORTE DE LA PRIMA", "start": 437, "end": 454, "length": 18, "type": "numeric", "required": true, "message": "En la moneda original."},
-    {"id": 64, "name": "bloomberg_ticker", "label": "BLOOMBERG TICKER", "start": 728, "end": 736, "length": 9, "type": "alphanumeric", "required": true, "message": "Clave del Bloomberg Ticker."},
-    {"id": 65, "name": "id_posicion", "label": "ID POSICION", "start": 798, "end": 817, "length": 20, "type": "alphanumeric", "required": true, "message": "Identificador único de posición según el número de regla."}
+    {"id": 13, "name": "precio_o_tasa_pactada", "label": "PRECIO O TASA PACTADA", "start": 81, "end": 94, "length": 14, "type": "numeric", "required": false, "message": "Precio o Tasa Pactados en el movimiento. Tasa Nuevo cupón en Pagos de cupón","expected": "             0"},
+    {"id": 14, "name": "precio_o_tasa_original", "label": "PRECIO O TASA ORIGINAL", "start": 95, "end": 108, "length": 14, "type": "numeric", "required": false, "message": "Precio o Tasa Pactados originales (sólo en compensaciones). Tasa del cupón que se paga","expected": "             0"},
+    {"id": 15, "name": "fecha_de_apertura_original", "label": "FECHA DE APERTURA ORIGINAL", "start": 109, "end": 116, "length": 8, "type": "date", "format": "YYYYMMDD", "required": false, "message": "Se usa en compensaciones. Fecha de operación original del derivado que se compensa.","expected": "        "},
+    {"id": 30, "name": "util_perd_valor_presente_monto_cupon", "label": "UTIL/PÉRD. VALOR PRESENTE / MONTO CUPON", "start": 419, "end": 436, "length": 18, "type": "numeric", "required": false, "message": "Monto de Utilidad/Pérdida Valor Presente. Monto pago/cobro de cupón en SWAPS. (Monto con I.S.R.)","expected": "                 0"},
+    {"id": 31, "name": "importe_de_la_prima", "label": "IMPORTE DE LA PRIMA", "start": 437, "end": 454, "length": 18, "type": "numeric", "required": true, "message": "En la moneda original."}
   ]
 }
 
