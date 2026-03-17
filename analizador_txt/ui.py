@@ -1,9 +1,9 @@
 import json
 import streamlit as st
-from analizador_txt.parser import read_lines, parse_line
-from analizador_txt.reports import export_json
-from analizador_txt.spec_loader import load_spec, pick_movement_schema
-from analizador_txt.rules_engine import validate_record
+from parser import read_lines, parse_line
+from reports import export_json
+from spec_loader import load_spec, pick_movement_schema
+from rules_engine import validate_record
 
 
 def run_ui():
